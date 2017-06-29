@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		
+	</head>
+	<body>
+		<div class="sun-div" id="sun">
+			<img src="image/sun.gif" alt="" />
+		</div>
+	</body>
+	
+	<script type="text/javascript">
+		var sun = document.getElementById('sun');
+		var body = document.body;
+		directX = 1;
+		directY = 1;
+		sunX = 0;
+		sunY = 0;
+		speed = 2;
+	
+		function sunMove() {
+						
+			sunX += directX*speed;
+			sunY += directY*speed;
+	
+			sun.style.top = sunY + "px";
+			sun.style.left = sunX + "px";
+			
+			if(sunX+sun.offsetWidth>=body.clientWidth
+				|| sunX <= 0){
+				directX = -directX;
+			}
+			if(sunY+sun.offsetHeight>=body.clientHeight
+				|| sunY <= 0){
+				directY = -directY;
+			}
+		}
+		
+		setInterval("sunMove()", 10);
+	</script>
+	
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		body{
+			height: 100vh;
+			width: 100%;
+			background-image: url('image/bg.jpg');
+			background-repeat: no-repeat;
+			background-size:cover;
+		}
+		.sun-div{
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+		.sun-div img{
+			width: 150px;
+		}
+	</style>
+</html>

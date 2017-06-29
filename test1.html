@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript">
+			function cat(){
+				// Private
+				var name = "123";
+				// Public
+				this.age = 11;
+				
+				this.show = function(){
+					return name;
+				}
+			}
+			var cat = new cat();
+			console.log(cat.show());
+			
+			
+			
+			function test(){
+				console.log(this.v);
+			}
+			var v = 999;
+			window.test();
+			
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

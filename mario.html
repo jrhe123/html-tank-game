@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/sweetalert2.css"/>
+        <script type="text/javascript" src="js/sweetalert2.js"></script>
+		<script type="text/javascript">
+			function Mario(){
+				this.x = 0;
+				this.y = 0;
+				
+				// 0: up, 1: right, 2: down, 3: left
+				this.move = function(direct){
+					var mario = document.getElementById("mario");
+					var princess = document.getElementById("princess");
+					
+					var startTop = mario.style.top;
+					var startLeft = mario.style.left;
+					var endTop, endLeft;
+										
+					if(startTop == ''){
+						startTop = "200px";
+					}
+					if(startLeft == ''){
+						startLeft = "0px";
+					}
+					
+					mario.style.top = startTop;
+					mario.style.left = startLeft;
+					princess.style.top = "50px";
+					princess.style.left = "350px";
+										
+					startTop = parseInt(startTop.replace('px',''));
+					startLeft = parseInt(startLeft.replace('px',''));
+					
+					switch(direct){
+						case "0":
+							//console.log("up");
+							endTop = startTop;
+							if(startTop > 0){
+								startTop = startTop - 50;
+							}
+							$('#mario').stop().animate({ "top" :  startTop + "px"}, 500, "swing", function(){
+								$('#mario').stop().animate({ "top" :  endTop + "px"}, 500);
+							});
+							break;
+						case "1":
+							//console.log("right");
+							if(startLeft < 350){
+								startLeft = startLeft + 25;
+							}
+							$('#mario').stop().animate({"left" : startLeft + "px"}, 500);
+							break;
+						case "2":
+							//console.log("down");
+							endTop = startTop;
+							if(startTop < 250){
+								startTop = startTop + 25;
+							}
+							$('#mario').stop().animate({ "height" :  "25px", "top" : startTop + "px"}, 500, function(){
+								$('#mario').stop().animate({ "height" :  "50px", "top" : endTop + "px"}, 500);
+							});
+							break;
+						case "3":
+							//console.log("left");
+							if(startLeft > 0){
+								startLeft = startLeft - 25;
+							}
+							$('#mario').stop().animate({"left" : startLeft + "px"}, 500);
+							break;	
+					}
+					
+					// Check reach point
+					var ml = parseFloat(mario.style.left.replace("px",""));
+					var mt = parseFloat(mario.style.top.replace("px",""));
+					var pl = parseFloat(princess.style.left.replace("px",""));
+					var pt = parseFloat(princess.style.top.replace("px",""));
+					
+					if(Math.abs(ml-pl) <= 50
+						&& (Math.abs(mt-pt) <= 100)){
+						swal(
+						  'WOW',
+						  '哇， 你好猛哦！顶',
+						  'success'
+						).then(function () {
+						  $('#mario').stop().animate({"left" : "0px", "top" : "200px"}, 500);
+						});
+					}
+				}
+			}			
+			var mario = new Mario();
+			
+			
+			function marioMove(direct){
+				mario.move(direct);
+			}
+			
+			$(document).keydown(function(e) {
+			    switch(e.which) {
+			        case 37: // left
+			        marioMove("3");
+			        break;
+			        case 38: // up
+			        marioMove("0");
+			        break;
+			        case 39: // right
+			        marioMove("1");
+			        break;
+			        case 40: // down
+			        marioMove("2");
+			        break;
+			        default: return; // exit this handler for other keys
+			    }
+			    e.preventDefault(); // prevent the default action (scroll / move caret)
+			});
+			
+			
+		</script>
+	</head>
+	<body>
+		
+		<div class="game-div">
+			<div class="game-div-wrapper">
+				<img id="mario" src="image/mario.jpg" />
+				<img id="princess" src="image/princess.gif">
+			</div>
+		</div>
+		
+		<div class="well text-center">Control Panel</div>
+
+			<div class="container text-center">
+				<div class="row">
+					<div class="col-sm-4 col-xs-4">
+						<p>&nbsp;</p>
+						<button type="button" class="btn btn-primary c-btn" onclick="marioMove('3')">Left</button>
+						<p>&nbsp;</p>
+					</div>
+					<div class="col-sm-4 col-xs-4">
+						<button type="button" class="btn btn-primary c-btn" onclick="marioMove('0')">Up</button>
+						<p>&nbsp;</p>
+						<button type="button" class="btn btn-primary c-btn" onclick="marioMove('2')">Down</button>
+					</div>
+					<div class="col-sm-4 col-xs-4">
+						<p>&nbsp;</p>
+						<button type="button" class="btn btn-primary c-btn" onclick="marioMove('1')">Right</button>
+						<p>&nbsp;</p>
+					</div>
+				</div>
+			</div>
+			
+						
+	</body>
+	
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		.game-div{
+			margin: 24px auto;
+			max-width: 600px;
+			width: 400px;
+			height: 400px;
+    		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		}
+		.game-div .game-div-wrapper{
+			position: relative;
+		}
+		.game-div .game-div-wrapper img{
+			width: 50px;
+			display: block;
+			position: absolute;
+		}
+		.game-div .game-div-wrapper img#mario{
+			left: 0px;
+			top: 200px;
+			z-index: 99;
+		}
+		.game-div .game-div-wrapper img#princess{
+			left: 350px;
+			top: 50px;
+		}
+		.c-btn{
+			width: 70px;
+		}
+	</style>
+	
+</html>

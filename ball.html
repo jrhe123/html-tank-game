@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body onkeydown="test(event)">
+		<canvas id="test" width="400px" height="300px"></canvas>
+	</body>
+	
+	<script type="text/javascript">
+		var canvas = document.getElementById("test");
+		var cxt = canvas.getContext("2d");
+		
+		var ballX = 30;
+		var ballY = 30;
+		drawBall();
+		function drawBall(){
+			cxt.beginPath();
+			cxt.fillStyle = "red";
+			cxt.arc(ballX,ballY,10,0,2 * Math.PI,true);
+			cxt.closePath();
+			cxt.fill();
+		}
+		
+		function test(){
+						
+			var code = event.keyCode;
+			switch(code){
+				case 87:
+					console.log("up");
+					ballY--;
+					break;
+				case 68:
+					console.log("right");
+					ballX++;
+					break;
+				case 83:
+					console.log("down");
+					ballY++;
+					break;	
+				case 65:
+					console.log("left");
+					ballX--;
+					break;	
+			}
+			
+			cxt.clearRect(0,0,400,300);
+			
+			drawBall();
+		}
+		
+	</script>
+	
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		#test{
+			background: #000;
+		}
+	</style>
+</html>

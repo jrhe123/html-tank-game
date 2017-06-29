@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		
+	</head>
+	<body onkeydown="move(event)">
+		<div class="pad">
+			<div id="tank"></div>	
+		</div>
+	</body>
+	
+	<script type="text/javascript">
+		
+		function MyTank(x,y,direct){
+			this.x = x;
+			this.y = y;
+			this.direct = direct;
+			this.speed = 5;
+			
+			// Init tank
+			var tank = document.getElementById('tank');
+			tank.style.left = this.x + "px";
+			tank.style.top = this.y + "px";
+			tank.style.backgroundPositionY = "0px";
+			
+			// a: left, w: up, d: right, s: down
+			// direct: left: 3, down: 2, right: 1, up: 0
+			this.move = function(event){
+				switch(event.keyCode){
+					case 65:
+						console.log('left');
+						this.x -= this.speed;
+						this.direct = 3;
+						tank.style.backgroundPositionY = "40px";
+						break;
+					case 68:
+						console.log('right');
+						this.x += this.speed;
+						this.direct = 1;
+						tank.style.backgroundPositionY = "120px";
+						break;
+					case 83:
+						console.log('down');
+						this.y += this.speed;
+						this.direct = 2;
+						tank.style.backgroundPositionY = "80px";
+						break;
+					case 87:
+						console.log('up');
+						this.y -= this.speed;
+						this.direct = 0;
+						tank.style.backgroundPositionY = "0px";
+						break;	
+				}
+				
+				tank.style.left = this.x + "px";
+				tank.style.top = this.y + "px";
+			}
+		}
+		
+		function move(event){
+			hero.move(event);
+		}
+		// create tank
+		var hero = new MyTank(200, 360, 0);
+		
+		
+	</script>
+		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			.pad{
+				position: absolute;
+				background: #000;
+				width: 500px;
+				height: 400px;
+			}
+			#tank{
+				background-image: url('image/itank.jpg');
+				width: 40px;
+				height: 40px;
+				background-position-y: 0px;
+				position: absolute;
+			}
+		</style>
+	
+</html>
